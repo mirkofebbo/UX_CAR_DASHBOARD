@@ -1,36 +1,19 @@
-// import React, { useState, useEffect } from 'react';
-// import socketIOClient from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Box } from '@mui/material';
 
-// import Speedometer from './components/Speedometer';
+import Dashboard from './page/Dashboard';
+import ViewSonic from './page/ViewSonic';
 
-// const SERVER_URL = 'http://localhost:3000';
 
-// function App() {
-//   const [wheelData, setWheelData] = useState(null);
+const App = () => (
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<ViewSonic/>}/>
+        <Route path="/Dashboard" element={<Dashboard/>}/>
+      </Routes>
+    </Router>
+  );
 
-//   useEffect(() => {
-//     const socket = socketIOClient(SERVER_URL);
 
-//     socket.on('wheelData', (data) => {
-//       setWheelData(data);
-//     });
-
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, []);
-
-//   return (
-//     <div className="App">
-//       {wheelData ? (
-//         <div>
-
-//         <Speedometer size={{ width: 200, height: 200 }} position={{ top: 100, left: 100 }} speed={wheelData.PEDAL.GAS} />        </div>
-//       ) : (
-//         <p>Loading...</p>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
+export default App;
