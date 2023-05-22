@@ -62,6 +62,7 @@ const Speedometer = ({ size, pedal, gear, speed }) => {
           transform: `rotate(${angle}deg)`,
         }}
       />
+      
       <Box
         sx={{
           position: 'absolute',
