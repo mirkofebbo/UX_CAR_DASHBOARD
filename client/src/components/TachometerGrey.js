@@ -74,7 +74,7 @@ const Tachometer = ({ size, pedal, gear, speed }) => {
           top: `${size * 0.68}px`,
         }}
       >
-        <Typography variant='h3'>
+        <Typography variant='h4'>
           {myText}
         </Typography>
       </Box>
