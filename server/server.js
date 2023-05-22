@@ -47,3 +47,18 @@ server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
+// MESSAGE
+// handle custom messages
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  // listen for custom message events
+  socket.on('customMessage', (message) => {
+    console.log(`Message received: ${message}`);
+    // send the message to all clients
+    io.emit('customMessage', message);
+  });
+
+  // Disconnect listener
+  socket.on('disconnect', () => console.log('Client disconnected'));
+});

@@ -50,6 +50,23 @@ const theme = createTheme({
         }
       `,
     },
+    MuiButton: {
+      styleOverrides: {
+        root: { // This will affect all the buttons
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          borderRadius: 5, // square corners
+          color: '#ff7d00',
+        },
+        containedPrimary: { // This will only affect the Primary contained buttons
+          backgroundColor: '#e1e1e1',
+          '&:hover': {
+            backgroundColor: '#1f2b46',
+          }
+        },
+        // You can also specify changes for the other variants like outlined, text etc
+      },
+    },
   },
   // Add other custom theme properties here
 });

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
-import ReactDOM from "react-dom/client";
-import socket from '../socket';
 
 import AudioPlayer from '../components/audio/AudioPlayer';
 import tracks from '../components/audio/tracks';
