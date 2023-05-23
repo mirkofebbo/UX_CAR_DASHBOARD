@@ -3,8 +3,8 @@ import { Box } from '@mui/material';
 import ReactDOM from "react-dom/client";
 import socket from '../socket';
 
-import Speedometer from '../components/SpeedometerGrey';
-import Tachometer from '../components/TachometerGrey';
+import Speedometer from '../components/Speedometer';
+import Tachometer from '../components/Tachometer';
 import FuelGauge from '../components/FuelGauge';
 import TempGauge from '../components/TempGauge';
 import Gear from '../components/Gear';

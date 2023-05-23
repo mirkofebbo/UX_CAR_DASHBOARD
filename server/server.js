@@ -20,7 +20,7 @@ const io = socketIO(server, {
     methods: ['GET', 'POST'],
   },
 });
-// Handle wheel data
+//==== WHEEL DATA ================================================
 connectToTXRacingWheel(
   (error) => {
     if (error) {
@@ -32,6 +32,20 @@ connectToTXRacingWheel(
     io.emit('DATA', simplifiedData);
   }
 );
+//==== MESSAGE ================================================
+// handle custom messages
+io.on('connection', (socket) => {
+  console.log('Client connected, id:', socket.id);
+
+  socket.on('customMessage', (message) => {
+    console.log(`Message received from client ${socket.id}: ${message}`);
+    io.emit('customMessage', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`Client ${socket.id} disconnected`);
+  });
+});
 
 //==== USB SERVER ================================================
 // Serve the React build folder
@@ -47,18 +61,4 @@ server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
-// MESSAGE
-// handle custom messages
-io.on('connection', (socket) => {
-  console.log('New client connected');
 
-  // listen for custom message events
-  socket.on('customMessage', (message) => {
-    console.log(`Message received: ${message}`);
-    // send the message to all clients
-    io.emit('customMessage', message);
-  });
-
-  // Disconnect listener
-  socket.on('disconnect', () => console.log('Client disconnected'));
-});

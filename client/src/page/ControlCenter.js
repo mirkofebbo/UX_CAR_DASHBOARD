@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { io } from "socket.io-client";
 
@@ -6,22 +6,23 @@ let socket;
 
 const ControlCenter = () => {
 
-    const [message, setMessage] = React.useState('');
+    const [message, setMessage] = useState('');
 
     const handleOpen = (path) => {
         window.open(path, '_blank');
     }
 
-    useEffect(() => {
-        socket = io("http://localhost:3000");
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-
-    const handleSendMessage = () => {
-        socket.emit('customMessage', message);
-        setMessage('');
+    const handleSend = () => {
+        if (!socket) {
+            socket = io('http://localhost:3000');
+            socket.on('connect', () => {
+              console.log('Connected to server, socket id:', socket.id);
+            });
+            socket.on('disconnect', () => {
+              console.log('Disconnected from server');
+            });
+          }
+          
     }
 
     return (
@@ -30,8 +31,8 @@ const ControlCenter = () => {
             <Button onClick={() => handleOpen('/SideMirror')}>SideMirror</Button>
             <Button onClick={() => handleOpen('/ViewSonic')}>ViewSonic</Button>
             <Button onClick={() => handleOpen('/Hud')}>Hud</Button>
-            <TextField value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter message..." />
-            <Button onClick={handleSendMessage}>Send Message</Button>
+            <TextField value={message} onChange={e => setMessage(e.target.value)} placeholder="Enter message..." />
+            <Button onClick={handleSend}>Send Message</Button>
         </Box>
     );
 };

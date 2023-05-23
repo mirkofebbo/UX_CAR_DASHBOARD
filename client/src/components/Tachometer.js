@@ -1,6 +1,6 @@
 import React from 'react';
-import background from '../images/tachometer1/background.png';
-import needle from '../images/tachometer1/needle.png';
+import background from '../images/tachometer/background.png';
+import needle from '../images/tachometer/needle.png';
 // STYLING
 import { Box, Typography } from '@mui/material';
 
