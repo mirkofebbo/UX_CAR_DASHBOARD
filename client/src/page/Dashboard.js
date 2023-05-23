@@ -17,32 +17,18 @@ var global_speed = 0;
 
 const Dashboard = () => {
     const [DATA, setData] = useState(null);
-    const [screenDimensions, setScreenDimensions] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-    });
-
+    
     useEffect(() => {
         socket.on('DATA', (data) => {
             // console.log('Received wheel data:', data);
             setData(data);
         });
-        const handleResize = () => {
-            setScreenDimensions({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        };
 
-        window.addEventListener('resize', handleResize);
-
-        WIDTH = screenDimensions.width;
-        HEIGHT = screenDimensions.height;
         return () => {
-            window.removeEventListener('resize', handleResize);
             socket.off('DATA');
         };
     }, []);
+
     return (
         <div>
             {DATA ? (
