@@ -26,7 +26,6 @@ const ControlCenter = () => {
       setMessage('');  // clear the message input field
   }
   
-
     return (
         <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Button onClick={() => handleOpen('/Dashboard')}>Dashboard</Button>
