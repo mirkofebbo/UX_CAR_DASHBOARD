@@ -13,17 +13,19 @@ const ControlCenter = () => {
     }
 
     const handleSend = () => {
-        if (!socket) {
-            socket = io('http://localhost:3000');
-            socket.on('connect', () => {
+      if (!socket) {
+          socket = io('http://localhost:3000');
+          socket.on('connect', () => {
               console.log('Connected to server, socket id:', socket.id);
-            });
-            socket.on('disconnect', () => {
+          });
+          socket.on('disconnect', () => {
               console.log('Disconnected from server');
-            });
-          }
-          
-    }
+          });
+      }
+      socket.emit('customMessage', message); // Emit the message
+      setMessage('');  // clear the message input field
+  }
+  
 
     return (
         <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', gap: '1rem' }}>

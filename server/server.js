@@ -38,9 +38,9 @@ io.on('connection', (socket) => {
   console.log('Client connected, id:', socket.id);
 
   socket.on('customMessage', (message) => {
-    console.log(`Message received from client ${socket.id}: ${message}`);
+    console.log(`Broadcasting message: ${message}`);
     io.emit('customMessage', message);
-  });
+});
 
   socket.on('disconnect', () => {
     console.log(`Client ${socket.id} disconnected`);
