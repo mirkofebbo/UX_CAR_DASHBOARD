@@ -7,7 +7,7 @@ export const SocketProvider = ({ children }) => {
   const socketRef = useRef(null);
 
   if (!socketRef.current) {
-    socketRef.current = io("http://localhost:3000");
+    socketRef.current = io();
   }
 
   return (

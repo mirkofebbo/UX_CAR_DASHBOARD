@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // Server
 import { SocketContext } from './components/SocketContext';
 import { io } from "socket.io-client";
+import { SERVER_IP } from './config';
 
 import theme from './theme';
 
@@ -20,7 +21,7 @@ const App = () => {
   const [socketError, setSocketError] = useState(null);
 
   useEffect(() => {
-    socketRef.current = io("http://localhost:3000");
+    socketRef.current = io(`http://${SERVER_IP}:3000`);
     socketRef.current.on('connect', () => {
       setIsSocketReady(true);
       setSocketError(null);

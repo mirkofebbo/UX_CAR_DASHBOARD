@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { SocketContext } from '../components/SocketContext';
 import { io } from "socket.io-client";
+import { SERVER_IP } from '../config';
 
 import { Box, Button, TextField } from '@mui/material';
-import FrameAnimation from '../components/FrameAnimation'
 
 const ControlCenter = () => {
 
@@ -18,7 +18,7 @@ const ControlCenter = () => {
     // TRANSMITING MESSAGE
     const handleSend = () => {
         if (!socket.current) {
-            socket.current = io('http://localhost:3000');
+            socket.current = io(`http://${SERVER_IP}:3000`);
             socket.current.on('connect', () => {
                 console.log('Connected to server, socket id:', socket.current.id);
             });
