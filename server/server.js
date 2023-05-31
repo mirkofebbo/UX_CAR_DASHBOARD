@@ -4,12 +4,11 @@ const socketIO = require('socket.io');
 const path = require('path');
 const cors = require('cors');
 const { connectToTXRacingWheel } = require('./util/txracingwheel');
-
-const clientId = '12579dc6ad3c47d3806657fa397db46b'
-const clientSecret = '73004d1041ef4c27b3a3ebf5bc4f71ed'
-const redirectUri = 'http://localhost:3000';
+const { addDataToBuffer, formatData, startDataSave, writeDataToCsv } = require('./util/DataHandler');
 
 const app = express();
+
+let saveData = false;
 
 app.use(cors());
 
@@ -30,22 +29,49 @@ connectToTXRacingWheel(
   (simplifiedData) => {
     console.log('Data:', simplifiedData);
     io.emit('DATA', simplifiedData);
+
+    // Add the DATA to CSV file 
+    if (saveData) {
+      const formattedData = formatData(simplifiedData);
+      addDataToBuffer(formattedData);
+    }
   }
 );
+
 //==== MESSAGE ================================================
 // handle custom messages
 io.on('connect', (socket) => {
   console.log('Client connected, id:', socket.id);
 
+  // SEDING MESSAGE 
   socket.on('customMessage', (message) => {
     console.log(`Broadcasting message: ${message}`);
     io.emit('customMessage', message);
-});
 
+    if (saveData) {
+      const formattedData = formatData(null, message);
+      addDataToBuffer(formattedData);
+    }
+  });
+
+  // RECORDING DATA 
+  socket.on('startSaveData', () => {
+    console.log('Starting data save...');
+    saveData = true;
+    startDataSave();
+
+  });
+  socket.on('stopSaveData', () => {
+    console.log('Saving Data');
+    saveData = false;
+    writeDataToCsv();
+  });
   socket.on('disconnect', () => {
-    console.log(`Client ${socket.id} disconnected`);
+    console.log('Client disconnect, id:', socket.id);
+
   });
 });
+
 //==== ANIMATION ================================================
 // handle animation change
 // io.on('connection', (socket) => {
@@ -73,5 +99,4 @@ const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-
 

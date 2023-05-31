@@ -1,0 +1,6 @@
+UNIX_TIMESTAMP,TIME_HH_MM_SS_FF,MESSAGE,GEAR,WHEEL,PEDAL_GAS,PEDAL_BRAKE,PEDAL_CLUTCH,D_PAD,POTMETER_PRESSED,POTMETER_LEFT,POTMETER_RIGHT:,A,B,X,Y,TAB,XBOX,YELLOW:,SHIFT_PEDAL_LEFT,SHIFT_PEDAL_RIGHT
+1685541437,14:57:17:81,,GEAR-7,10539,374,854,957,IDLE,true,false,,true,false,true,false,false,false,,false,true
+1685541438,14:57:18:81,,GEAR-7,-6804,81,935,758,UP,false,true,,false,true,true,true,true,true,,false,false
+1685541439,14:57:19:82,,GEAR-4,30905,246,18,239,LEFT,false,true,,true,true,true,true,true,false,,false,true
+1685541440,14:57:20:84,,IDLE,369,105,352,568,IDLE,false,false,,true,true,true,true,true,true,,false,false
+1685541441,14:57:21:83,,GEAR-3,32690,924,286,931,RIGHT,false,false,,false,true,true,false,true,false,,true,true

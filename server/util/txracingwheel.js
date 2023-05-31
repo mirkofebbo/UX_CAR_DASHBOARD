@@ -123,7 +123,7 @@ function connectToTXRacingWheel(callback, dataCallback) {
     setInterval(() => {
       const simplifiedData =  generateNoiseData();
       dataCallback(simplifiedData);
-    }, 10000);
+    }, 1000);
   }
 }
 
