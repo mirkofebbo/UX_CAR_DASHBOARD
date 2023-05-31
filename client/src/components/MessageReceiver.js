@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, Card, CardHeader, Avatar, Snackbar } from '@mui/material';
-import { io } from "socket.io-client";
+import { SocketContext } from '../components/SocketContext';
 
-let socket;
 
-const MessageReceiver = ({size}) => {
-
-    const [message, setMessage] = useState('');
+const MessageReceiver = ({ size }) => {
+    const socket = useContext(SocketContext);
+    const [message, setMessage] = useState("");
     const [open, setOpen] = useState(false);
     const [sender, setSender] = useState('AN'); // Set this to the sender's initials
 
     useEffect(() => {
-        if (!socket) {
+        if (socket && socket.current) {
             try {
-                socket = io("http://localhost:3000");
-                socket.on('connect', () => {
-                    console.log('Connected to server, socket id:', socket.id);
+                socket.current.on('connect', () => {
+                    console.log('Connected to server, socket id:', socket.current.id);
                 });
-                socket.on('customMessage', (msg) => {
+                socket.current.on('customMessage', (msg) => {
                     console.log(`Message received: ${msg}`);
                     setMessage(msg);
                     setOpen(true);
                 });
-                socket.on('disconnect', () => {
+                socket.current.on('disconnect', () => {
                     console.log('Disconnected from server');
                 });
             } catch (error) {
                 console.log('Could not connect to server:', error);
             }
         }
+    
         // clean up the effect
-        return () => socket.disconnect();
-
-    }, []);
+        return () => {
+            console.log('Cleanup function in MessageReceiver');
+            // socket.current.disconnect();
+        };
+    
+      }, []);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -46,15 +48,15 @@ const MessageReceiver = ({size}) => {
             sx={{
                 position: 'relative',
                 width: `${size}px`,     // IMG SIZE
-                height: `${100}px`,    // IMG SIZE
+                height: `${size}px`,    // IMG SIZE
                 backgroundColor: 'none',
                 left: `${-size / 2}px`,   // CENTERING 
-                top: `${-100 / 2}px`,    // CENTERING 
+                top: `${-size / 2}px`,    // CENTERING 
             }}
         >
             {message &&
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Card  >
+                    <Card sx={{ width: 480, height: 120 }}>
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: 'secondary.main' }}>

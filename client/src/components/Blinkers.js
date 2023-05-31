@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 
 // IMAGES
 import blinkerOff from '../images/blinker/blinkerOff.png';
 import blinkerOn from '../images/blinker/blinkerOn.png';
-
+// import blinkerOn from '../images/animations/animation_1/frame_1.png'
 var prevButtonB = false;
 var lightState = false;
 

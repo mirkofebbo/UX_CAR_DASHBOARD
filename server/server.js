@@ -34,7 +34,7 @@ connectToTXRacingWheel(
 );
 //==== MESSAGE ================================================
 // handle custom messages
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
   console.log('Client connected, id:', socket.id);
 
   socket.on('customMessage', (message) => {
@@ -46,7 +46,20 @@ io.on('connection', (socket) => {
     console.log(`Client ${socket.id} disconnected`);
   });
 });
+//==== ANIMATION ================================================
+// handle animation change
+// io.on('connection', (socket) => {
+//   console.log('Client connected, id:', socket.id);
 
+//   socket.on('customMessage', (message) => {
+//     console.log(`Broadcasting message: ${message}`);
+//     io.emit('customMessage', message);
+// });
+
+//   socket.on('disconnect', () => {
+//     console.log(`Client ${socket.id} disconnected`);
+//   });
+// });
 //==== USB SERVER ================================================
 // Serve the React build folder
 app.use(express.static(path.join(__dirname, 'build')));
