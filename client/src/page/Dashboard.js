@@ -10,17 +10,21 @@ import TempGauge from '../components/TempGauge';
 import Gear from '../components/Gear';
 import Blinker from '../components/Blinkers'
 
-
-var WIDTH = 1920;
-var HEIGHT = 326;
+// LONG SCREEN (LARGE SIZE TOUCH SCREEN)
+var WIDTH = 1920; // DISPLAY WIDTH 
+var HEIGHT = 326; // DISPLAY HEIGHT 
 var global_speed = 0;
 
+// This code display all the dashboard componants like speedometer and blinker. 
+// All the componants are wrap in a Box to place them on the screen
+
 const Dashboard = () => {
+    // SERVER START ------------------------------
     const [DATA, setData] = useState(null);
     
+    // Connect to the server to get the wheel data 
     useEffect(() => {
         socket.on('DATA', (data) => {
-            // console.log('Received wheel data:', data);
             setData(data);
         });
 
@@ -28,6 +32,7 @@ const Dashboard = () => {
             socket.off('DATA');
         };
     }, []);
+    // SERVER END ------------------------------
 
     return (
         <div>

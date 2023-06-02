@@ -12,16 +12,16 @@ const theme = createTheme({
       main: '#1f2b46',
     },
     secondary: {
-      main: '#c4302b', 
+      main: '#c4302b',
     },
     background: {
       default: '#262626',
     },
     text: {
-      primary: '#e1e1e1', 
+      primary: '#e1e1e1',
     },
   },
-  typography:{
+  typography: {
     fontSize: 18,
     fontFamily: "'IBMPlexMono', monospace",
     h1: {
@@ -38,6 +38,34 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          color: '#ff7d00', 
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#ff7d00',
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          color: '#ff7d00',
+        },
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          color: '#ff7d00', 
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: `
         @font-face {

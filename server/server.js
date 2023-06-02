@@ -19,6 +19,8 @@ const io = socketIO(server, {
     methods: ['GET', 'POST'],
   },
 });
+
+
 //==== WHEEL DATA ================================================
 connectToTXRacingWheel(
   (error) => {
@@ -54,7 +56,7 @@ io.on('connect', (socket) => {
     }
   });
 
-  // RECORDING DATA 
+  //==== RECODING DATA ================================================
   socket.on('startSaveData', () => {
     console.log('Starting data save...');
     saveData = true;
@@ -73,19 +75,19 @@ io.on('connect', (socket) => {
 });
 
 //==== ANIMATION ================================================
-// handle animation change
-// io.on('connection', (socket) => {
-//   console.log('Client connected, id:', socket.id);
+io.on('connection', (socket) => {
+  // Other event handlers here...
+  socket.on('startAnimation', (animation) => {
+    console.log(`Starting animation ${animation}`);
+    io.emit('startAnimation', animation); // Change message to animation
+  });
 
-//   socket.on('customMessage', (message) => {
-//     console.log(`Broadcasting message: ${message}`);
-//     io.emit('customMessage', message);
-// });
+  socket.on('stopAnimation', (animation) => {
+    console.log(`Stopping animation ${animation}`);
+    io.emit('stopAnimation', animation); // Change message to animation
+  });
+});
 
-//   socket.on('disconnect', () => {
-//     console.log(`Client ${socket.id} disconnected`);
-//   });
-// });
 //==== USB SERVER ================================================
 // Serve the React build folder
 app.use(express.static(path.join(__dirname, 'build')));

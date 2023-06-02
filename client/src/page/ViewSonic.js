@@ -3,8 +3,11 @@ import { Box } from '@mui/material';
 
 import AudioPlayer from '../components/audio/AudioPlayer';
 import tracks from '../components/audio/tracks';
-var WIDTH = 895;
-var HEIGHT = 1600;
+
+// VIEWSONIC SCREEN (MEDIUM SIZE TOUCH SCREEN)
+var WIDTH = 895; //DISPLAY WIDTH 
+var HEIGHT = 1600; // DISPLAY HEIGHT 
+
 const ViewSonic = () => {
 
     return (

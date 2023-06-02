@@ -8,6 +8,7 @@ import { SERVER_IP } from './config';
 
 import theme from './theme';
 
+// LOADING THE PAGE 
 import ControlCenter from './page/ControlCenter';
 import Dashboard from './page/Dashboard';
 import ViewSonic from './page/ViewSonic';
@@ -15,7 +16,11 @@ import LeftMirror from './page/LeftMirror';
 import RightMirror from './page/RightMirror';
 import Hud from './page/Hud';
 
+// This code load the pages and start the server connection 
+
 const App = () => {
+
+  // SERVER START ------------------------------
   const socketRef = useRef(null);
   const [isSocketReady, setIsSocketReady] = useState(false);
   const [socketError, setSocketError] = useState(null);
@@ -31,12 +36,14 @@ const App = () => {
     });
     return () => socketRef.current.close();
   }, []);
+  // SERVER END ------------------------------
 
   return (
-    <SocketContext.Provider value={socketRef}>
+    // Only show the page if we get connected to the server
+    <SocketContext.Provider value ={socketRef}>
       <ThemeProvider theme={theme}>
         <Router>
-          {isSocketReady ? (
+          {isSocketReady ?(
             <Routes>
               <Route exact path="/" element={<ControlCenter />} />
               <Route path="/Dashboard" element={<Dashboard />} />

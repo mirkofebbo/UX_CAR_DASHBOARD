@@ -3,13 +3,15 @@ import { SocketContext } from '../components/SocketContext';
 import { io } from "socket.io-client";
 import { SERVER_IP } from '../config';
 
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, FormControl, InputLabel, Select, MenuItem, Switch } from '@mui/material';
 
 const ControlCenter = () => {
-
+    // SERVER START ------------------------------
     const socket = useContext(SocketContext);
     const [message, setMessage] = useState("");
     const [saveData, setSaveData] = useState(false);
+    const [animationCount, setAnimationCount] = useState(''); // New state for the animation count
+    const [animationStates, setAnimationStates] = useState({});
 
     const handleOpen = (path) => {
         window.open(path, '_blank');
@@ -42,6 +44,36 @@ const ControlCenter = () => {
         socket.current.emit('stopSaveData');
     }
 
+    // ANIMATION
+    const handleAnimationCountChange = (event) => {
+        const count = event.target.value;
+        setAnimationCount(count);
+
+        // Initialize animation states
+        const newAnimationStates = {};
+        for (let i = 1; i <= count; i++) {
+            newAnimationStates[i] = false;
+        }
+        setAnimationStates(newAnimationStates);
+    }
+    const handleAnimationStateChange = (animation) => (event) => {
+        setAnimationStates(prevStates => ({
+            ...prevStates,
+            [animation]: event.target.checked,
+        }));
+
+        // Emit an event to start or stop the animation based on the switch state
+        if (event.target.checked) {
+            // Start the animation
+            socket.current.emit('startAnimation', animation);
+        } else {
+            // Stop the animation
+            socket.current.emit('stopAnimation', animation);
+        }
+    }
+
+    // SERVER END ------------------------------
+
     return (
         <Box sx={{ position: 'absolute', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Button onClick={() => handleOpen('/Dashboard')}>Dashboard</Button>
@@ -56,7 +88,32 @@ const ControlCenter = () => {
             ) : (
                 <Button onClick={handleStopSaveData}>Stop Saving Data</Button>
             )}
-            {/* <FrameAnimation size={100} animationName="animation_1" totalFrames={32} interval={100} /> */}
+            <FormControl sx={{ minWidth: 120 }}>
+                <InputLabel id="animation-count-label">Animation Count</InputLabel>
+                <Select
+                    labelId="animation-count-label"
+                    id="animation-count"
+                    value={animationCount}
+                    label="Animation Count"
+                    onChange={handleAnimationCountChange}
+                >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((count) => (
+                        <MenuItem key={count} value={count}>{count}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            {Object.entries(animationStates).map(([animation, state]) => (
+                <Box key={animation} sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Button onClick={() => { /* Code to start/stop animation here... */ }}>
+                        Animation {animation}
+                    </Button>
+                    <Switch
+                        checked={state}
+                        onChange={handleAnimationStateChange(animation)}
+                        inputProps={{ 'aria-label': `Switch for animation ${animation}` }}
+                    />
+                </Box>
+            ))}
         </Box>
     );
 };
